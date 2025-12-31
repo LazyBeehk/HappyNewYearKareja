@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Shreya ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff3366;
+            --secondary: #ffcce0;
+            --bg-dark: #2a0816;
+            --bg-light: #5e1330;
+            --glass: rgba(255, 255, 255, 0.15);
+            --glow: rgba(255, 51, 102, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: radial-gradient(circle at center, var(--bg-light), var(--bg-dark));
+            min-height: 100vh;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .firefly {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            width: 0.5vw;
+            height: 0.5vw;
+            margin: -0.2vw 0 0 9.8vw;
+            animation: ease 200s alternate infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .firefly::before, .firefly::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform-origin: -10vw;
+        }
+        .firefly::before { background: var(--primary); opacity: 0.4; animation: drift ease alternate infinite; }
+        .firefly::after { background: white; opacity: 0; box-shadow: 0 0 0vw 0vw var(--primary); animation: drift ease alternate infinite, flash ease infinite; }
+
+        section {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s, transform 1s;
+            transform: scale(0.95) translateY(20px);
+            z-index: 2;
+        }
+
+        section.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: scale(1) translateY(0);
+        }
+
+        .glass-box {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 40px 30px;
+            border-radius: 30px;
+            box-shadow: 0 0 40px var(--glow);
+            max-width: 90%;
+            width: 400px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        h1, h2 {
+            font-family: 'Great Vibes', cursive;
+            color: var(--secondary);
+            text-shadow: 0 0 15px var(--primary);
+        }
+
+        h1 { font-size: 4rem; }
+        h2 { font-size: 2.8rem; }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #ffe6f0;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #ff6b95, #ff3366);
+            border: none;
+            padding: 15px 40px;
+            color: white;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .pulse-btn { animation: heartbeat 1.5s infinite; }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .polaroid-container {
+            width: 280px;
+            height: 350px;
+            background: white;
+            padding: 15px 15px 60px;
+            transform: rotate(-3deg);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            border-radius: 5px;
+            margin-bottom: 40px;
+        }
+
+        .polaroid-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .polaroid-caption {
+            position: absolute;
+            bottom: 15px;
+            width: 100%;
+            text-align: center;
+            color: #444;
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.8rem;
+        }
+
+        #confetti {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="confetti"></canvas>
+
+<section id="s1" class="active">
+    <div class="glass-box">
+        <h2>Hey Kareja ❤️</h2>
+        <p>This world is locked. Enter the secret name I call you to enter.</p>
+        <input type="password" id="password" placeholder="Hint: k.....">
+        <button onclick="unlock()" class="pulse-btn">Unlock My Heart</button>
+        <p id="errorMsg"></p>
+    </div>
+</section>
+
+<section id="s2">
+    <h1 id="welcomeText"></h1>
+    <button onclick="navigate('s2','s3')">Let's Go ➜</button>
+</section>
+
+<section id="s3">
+    <h2>Our Memories 📸</h2>
+    <div class="polaroid-container">
+        <img id="galleryImg"
+             src="https://github.com/LazyBeehk/HappyNewYearKareja/blob/main/1.jpeg">
+        <div class="polaroid-caption">Us Forever</div>
+    </div>
+    <button onclick="navigate('s3','s4')">Next ❤️</button>
+</section>
+
+<section id="s4">
+    <div class="glass-box">
+        <h2>Dear Shreya,</h2>
+        <p id="letterText"></p>
+    </div>
+    <button onclick="navigate('s4','s5')" class="pulse-btn">One Last Thing 💍</button>
+</section>
+
+<section id="s5">
+    <h2>Will you be with me forever?</h2>
+    <button onclick="acceptProposal()" class="pulse-btn">YES ❤️</button>
+</section>
+
+<section id="s6">
+    <h1>YAYYY 🎉</h1>
+    <h2>I Love You Shreya ❤️</h2>
+</section>
+
+<script>
+const PASSCODE = "kareja";
+
+const PHOTOS = [
+    "https://github.com/LazyBeehk/HappyNewYearKareja/blob/main/1.jpeg",
+    "https://github.com/LazyBeehk/HappyNewYearKareja/blob/main/2.jpeg",
+    "https://github.com/LazyBeehk/HappyNewYearKareja/blob/main/3.jpeg",
+    "https://github.com/LazyBeehk/HappyNewYearKareja/blob/main/4.jpeg"
+];
+
+const LETTER_CONTENT = "As we step into 2026, I want you to know that you are my happiness, my peace, and my home.";
+
+let currentPhoto = 0;
+const music = document.getElementById("bgMusic");
+
+function unlock() {
+    if (password.value.toLowerCase() === PASSCODE) {
+        music.play();
+        navigate("s1","s2");
+        typeWriter("welcomeText","Happy New Year Shreya ❤️",100);
+        startGallery();
+    }
+}
+
+function navigate(a,b){
+    document.getElementById(a).classList.remove("active");
+    document.getElementById(b).classList.add("active");
+    if(b==="s4") typeWriter("letterText",LETTER_CONTENT,40);
+}
+
+function typeWriter(id,text,speed){
+    let i=0, el=document.getElementById(id);
+    el.innerHTML="";
+    (function t(){
+        if(i<text.length){ el.innerHTML+=text[i++]; setTimeout(t,speed); }
+    })();
+}
+
+function startGallery(){
+    setInterval(()=>{
+        currentPhoto=(currentPhoto+1)%PHOTOS.length;
+        galleryImg.src=PHOTOS[currentPhoto];
+    },3000);
+}
+
+function acceptProposal(){
+    navigate("s5","s6");
+}
+</script>
+
+</body>
+</html>
